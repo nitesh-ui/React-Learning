@@ -1,2 +1,2 @@
 # React-Learning
-Add React Projects By Leanrning
+Add React Projects By Learning
