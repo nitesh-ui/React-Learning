@@ -4,15 +4,18 @@ import Dropdown from './Dropdown';
 
 const Questions = (props) => {
 
-    const {allQuestion, selectedOption} = props
+    const {allQuestion, selectedOption, answers, setAnswers} = props
 
     const [option, setOption] = useState(selectedOption);
     const [inputValue, setInputValue] = useState("");
     const [counter, setCounter] = useState(1);
+    const [inputAnswer, setInputAnswer] = useState(answers[option.id]);
 
     const nextHandler = () => {
         setOption(allQuestion[option.next]);
         setCounter(counter + 1);
+        setAnswers({...answers, [option.id]: inputAnswer});
+        setInputAnswer('');
     }
 
     const prevHandler = () => {
@@ -24,12 +27,24 @@ const Questions = (props) => {
         setInputValue(inputValue);
     }, [inputValue]);
 
+    const onInputChange = (event) => {
+        setInputAnswer(event.target.value);
+    }
+
+    const onDropdownChange = (option) => {
+        setInputAnswer(option);
+    }
+
+    const onRadioChange = (event) => {
+        setInputAnswer(event.target.value);
+    }
+
     const Radio = ({question}) => {
         return (
             <>
                 {question.allOptions.map((option) => (
                     <div className='d-flex align-items-center' key={option}>
-                        <input type="radio" id={option} name="certification" value={option} checked={option === "One" ? true : false} />
+                        <input type="radio" id={option} name="certification" value={option} onChange={onRadioChange} checked={option === inputAnswer ? true : false} />
                         <label htmlFor={option}>{option}</label>
                     </div>
                 ))}
@@ -45,8 +60,8 @@ const Questions = (props) => {
             <div className='answer d-flex align-items-center'>
                 <span className='me-2 align-self-start'>Answer:</span> 
                 <div className='answer-result'>
-                    {option.inputType === "text" ? <input type="text" name="answer" value={option.answer} />
-                     : option.inputType === "dropdown" ? <Dropdown dropdownOptions={option} defaultOption={option.answer}/> 
+                    {option.inputType === "text" ? <input type="text" name="answer" value={inputAnswer} onChange={onInputChange}/>
+                     : option.inputType === "dropdown" ? <Dropdown dropdownOptions={option}  onDropdownChange={onDropdownChange}/> 
                      : <Radio question={option}/>}
                 </div>
             </div>

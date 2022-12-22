@@ -7,12 +7,10 @@ const Counter = (props) => {
     const [counter, setCounter] = useState(value);
 
     const decrementHandler = () => {
-        // setCounter(counter - 1);
         setCounterValue(counter - 1);
     }
 
     const incrementHandler = () => {
-        // setCounter(counter + 1);
         setCounterValue(counter + 1);
     }
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "../App.css";
 
-const Dropdown = ({dropdownOptions, defaultOption}) => {
+const Dropdown = ({dropdownOptions, defaultOption, onDropdownChange}) => {
 
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(defaultOption)
+    const [selectedOption, setSelectedOption] = useState(defaultOption || 'Select');
   
     const ref = useRef(null);
 
@@ -15,6 +15,7 @@ const Dropdown = ({dropdownOptions, defaultOption}) => {
     const clickHandle = (value) => {
         setSelectedOption(value);
         headingClick();
+        onDropdownChange(value);
     }
 
     useEffect(() => {
