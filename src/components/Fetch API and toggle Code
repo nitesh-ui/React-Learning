@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const NameList = () => {
   const [names, setNames] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -15,6 +16,10 @@ const NameList = () => {
     setVisible((visible) => !visible);
   };
 
+  const changeHandler = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
     <div>
       {names.map((item) => (
@@ -22,6 +27,8 @@ const NameList = () => {
       ))}
       <button onClick={toggleVisible}>Toggle</button>
       {visible && <p>Message Visible</p>}
+      <input type="text" value={value} onChange={changeHandler} />
+      You have entered: {value}
     </div>
   );
 };
